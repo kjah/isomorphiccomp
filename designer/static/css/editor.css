@@ -1,0 +1,3277 @@
+*{
+    box-sizing: border-box;
+}
+html{
+	overflow-y: hidden;
+}
+
+html,body{
+	height:100%;
+	width:100%;
+}
+body{
+    user-select: none;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: "微软雅黑";
+	vertical-align: baseline;
+    list-style: none;
+}
+*:focus {
+    outline: none;
+}
+iframe{
+	border:0;
+	width:100%;
+	height:100%;
+	overflow-x: scroll;
+    display:block;
+    box-shadow: 0 0 1px 0 #e5e5e5; 
+}
+/*设置滚动条样式*/
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width:5px;
+}
+            
+/* Track */
+/*::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}*/
+            
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 1px;
+    background: #D8D8D8;    
+}
+#mainArea{
+	margin:0 auto;
+	width:768px;
+	height:calc(100% - 60px);
+	position: relative;
+}
+#topbar{
+	height:19px;
+	border-bottom: 1px solid gray
+}
+#editLayer{
+	width:calc(100% - 17px);
+	height:calc(100% - 17px);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	overflow: hidden;
+    z-index: 1;
+}
+#eventLayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(5,5,5,0);
+}
+#editBox{
+	position: absolute;
+	/*border: 2px solid #3197EF;*/
+    outline: 2px solid #3197EF;
+    outline-offset: -2px;
+	width:369px;
+	height:496px;
+	top:0px;
+	left:377px;
+}
+#editBox .operation{
+    height: 100%;
+    position: relative;
+    /*z-index: 1;*/
+}
+.top_bar_breakpoints{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    color: #5F5F5F;
+    font-size: 12px;
+    line-height: 25px;
+    transition: background-color 1s;
+    cursor: pointer;
+}
+.breakpoint-pc:hover{
+    background: #F9D569;
+}
+.pc .breakpoint-icon, .breakpoint-pc:hover ~ .breakpoint-icon{
+    background-position: -25px 0px;
+}
+.pad .breakpoint-icon, .breakpoint-pad:hover ~ .breakpoint-icon{
+    background-position: -75px 0px;
+}
+.mobile .breakpoint-icon, .breakpoint-mobile:hover ~ .breakpoint-icon{
+    background-position: -125px 0px;
+}
+.pc .breakpoint-pc, .pad .breakpoint-pad, .mobile .breakpoint-mobile{
+    border-color: #404040;
+}
+
+.pc .breakpoint-pc:before, .pc .breakpoint-pc:after, .pad .breakpoint-pad:before, .pad .breakpoint-pad:after, .mobile .breakpoint-mobile:before, .mobile .breakpoint-mobile:after{
+    background: no-repeat center center;
+    content: '';
+    width: 6px;
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    background-image: url(../img/arrows_right.png);
+}
+
+.pc .breakpoint-pc:after, .pad .breakpoint-pad:after, .mobile .breakpoint-mobile:after{
+    left: auto;
+    right: 0px;
+    background-image: url(../img/arrows_left.png);
+}
+
+.breakpoint-pad:hover{
+    background: #69F98E;
+}
+.breakpoint-mobile:hover{
+    background: #69B6F9;
+}
+.breakpoint-pad{
+    width: 1024px;
+    border-left: 1px solid #CDCDCD;
+    border-right: 1px solid #CDCDCD;
+}
+.breakpoint-mobile{
+    width: 768px;
+    border-left: 1px solid #CDCDCD;
+    border-right: 1px solid #CDCDCD;
+}
+.breakpoint-icon{
+    width: 25px;
+    pointer-events: none;
+    background: url(../img/breakpoint_icon.png) no-repeat 0px 0px;
+}
+.top_bar_breakpoints .breakpoints-width-left{
+    position: absolute;
+    left: 10px;
+}
+.top_bar_breakpoints .breakpoints-width-right{
+    position: absolute;
+    right: 10px;
+}
+#canvasBreakpoints{
+    width: 100%;
+    height: 25px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    z-index: 9997;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    background: #FFFFFF;
+    font-family: PingFangSC-Semibold;
+}
+#canvasBreakpoints.pc{
+
+}
+.heard.flow+#canvasBreakpoints{
+    display: block;
+}
+.heard.flow ~ #measurin, .heard.flow ~ #mainBody, .heard.flow ~ #mainEvent, .heard.flow ~ #svgDrawing{
+    top: 66px;
+}
+body{
+    /*background-image: url(data:image/gif;base64,R0lGODlhCAAIAKIAAOTi5MnGydbV1snEyebk5uTh5Obi5gAAACH5BAAAAAAALAAAAAAIAAgAAAMYCBChrEJAMQJZFsSpCnaNJhgiczHkJioJADs=);*/
+    background-color: #fff;
+    border: 10px solid #f2f2f2;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#svgDrawing{
+    shape-rendering: crispEdges;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    transform: translate(-50%);
+    top: 41px;
+    left: 50%;
+    z-index: 9997;
+    font-size: 0px;
+    min-width: auto;
+    height: 933px;
+}
+/* 流式布局-隐藏内容组按钮图标 begin */
+#compEditBoxFlow.compEditBox.grid.cgHide, 
+#compEditBoxFlow.compEditBox.grid.cgHide .knob{
+    border-color: #0D0D0D;
+}
+#compEditBoxFlow.compEditBox.grid.cgHide .editorFlow_wrapBox > ul > li.grid, 
+#compEditBoxFlow.compEditBox.grid.cgHide .editorFlow_wrapBox > .settingBox > span{
+    background-color: #0D0D0D;
+}
+#compEditBoxFlow.compEditBox .editorFlow_wrapBox > .settingBox > span.visible{
+    padding: 0px;
+}
+#compEditBoxFlow.compEditBox .editorFlow_wrapBox > .settingBox > span.visible:before{
+    background-image: url(../img/cg_visible.png);
+    left:0px;
+    background-position: center center;
+}
+#compEditBoxFlow.compEditBox.cgHide .editorFlow_wrapBox > .settingBox > span.visible:before{
+    background-image: url(../img/cg_hidden.png);
+}
+/* 流式布局-隐藏内容组按钮图标 end */
+
+/*按钮公共样式 开始*/
+button{
+    width: auto;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 10px;
+    background: #3197EF;
+    box-shadow: 0 0 7px 0 rgba(0,0,0,0.30);
+    border-radius: 3px;
+    font-size: 14px;
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(0,0,0,0.30);
+    border: none;
+    cursor: pointer;
+}
+.btn{
+    height: 36px;
+    line-height: 36px;
+    background-color: transparent;
+    padding: 0 23px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    border-radius: 2px;
+}
+.btn.left{
+    float: left;
+    margin-top: 7px;
+}
+.btn.right{
+    float: right;
+    margin-top: 7px;
+}
+.btn.gray{
+    color: #888;
+}
+.btn.blue{
+    color: #2895F2;
+}
+.btn:hover{
+    cursor: pointer;
+}
+.btn.gray:hover{
+    background: rgba(153,153,153,0.10);
+}
+.btn.blue:hover{
+    background: #409EFF;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+    color: #fff;
+}
+.btn.recovering{
+    background: rgba(153,153,153,0.10);
+    color: #363636;
+    padding: 0 5px;
+}
+.btn.uploading{
+    background: #409EFF;
+    color: #fff;
+    padding: 0 5px;
+}
+/*按钮公共样式 结束*/
+
+/*拖入容器的示意图 开始*/
+#editAreaFlowPlaceholder{
+    background: #00A0FF;
+    display: none;
+}
+#editAreaFlowPlaceholder.show{
+    display: block;
+}
+#editAreaFlowPlaceholder .line{
+    max-width: 140px;
+    max-height: 140px;
+    height: 80%;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+}
+#editAreaFlowPlaceholder .line img{
+    height: 100%;
+    width: auto;
+    display: none;
+}
+#editAreaFlowPlaceholder.show .line img{
+    display: block;
+}
+/*拖入容器的示意图 结束*/
+div[class^="w_grid-"] .p_gridCell:before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border:1px solid #ccc;
+    display: none;
+}
+div[class^="w_grid-"] .p_gridCell:after{
+    content: "拖放内容至网格容器";
+    width: 100%;
+    height: auto;
+    font-size: 12px;
+    color: rgba(0,0,0,0.50);
+    font-family: "微软雅黑";
+    font-style: normal;
+    font-weight: normal;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform:translateY(-50%);
+    text-align: center;
+    display: none;
+}
+div[class^="w_grid-"] .p_gridCell.ND_empty:after,div[class^="w_grid-"] .p_gridCell.ND_empty:before{
+    display: block; 
+}
+div[class^="w_grid-"] .p_gridCell.ND_empty{
+    min-height: 12rem;
+}
+div[class="w_grid-000"] .p_gridCell:after{
+    content: "拖放内容至容器";
+}
+
+/*选中框样式 开始*/
+#editBox .textEditing,#editBox .imageEditing,#editBox .componentEditing{
+    position: absolute;
+    right: 0;
+    top: -39px;
+    display: none;
+    padding-bottom: 5px;
+}
+#editBox.bottom .textEditing,#editBox.bottom .imageEditing,#editBox.bottom .componentEditing{
+    bottom: -39px;
+    top: initial;
+    padding-top: 5px;
+    padding-bottom: initial;
+}
+#editBox .componentEditing > button{
+    display: none;
+}
+#editBox .componentEditing > button.changeStyle{
+    display: inline-block;
+}
+#editBox .componentEditing.add  > button.addContent{
+    display: inline-block;
+}
+#editBox .componentEditing.edit  > button.changeCategory{
+    display: inline-block;
+}
+#editBox .componentEditing.modify  > button.modifyContent{
+    display: inline-block;
+}
+#editBox.text .textEditing{
+    display: block;
+}
+#editBox.image .imageEditing{
+    display: block;
+}
+#editBox.component .componentEditing{
+    display: block;
+}
+#editBox .topLeftHandler{
+    background-image: url(../img/topLeftHandler.png);
+    top: 7px;
+    left: 7px;
+}
+#editBox .topRightHandler{
+    background-image: url(../img/topRightHandler.png);
+    top: 7px;
+    right: 7px;
+}
+#editBox .bottomLeftHandler{
+    background-image: url(../img/bottomLeftHandler.png);
+    bottom: 7px;
+    left: 7px;
+}
+#editBox .bottomRightHandler{
+    background-image: url(../img/bottomRightHandler.png);
+    bottom: 7px;
+    right: 7px;
+}
+#editBox .topLeftHandler,#editBox .topRightHandler,#editBox .bottomLeftHandler,#editBox .bottomRightHandler{
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    background-position: center;
+    background-size: auto;
+    cursor: move;
+}
+#editBox.editing .topLeftHandler,
+#editBox.editing .topRightHandler,
+#editBox.editing .bottomLeftHandler,
+#editBox.editing .bottomRightHandler,
+#editBox.isFixed .topLeftHandler,
+#editBox.isFixed .topRightHandler,
+#editBox.isFixed .bottomLeftHandler,
+#editBox.isFixed .bottomRightHandler{
+    display: none;
+}
+
+#editBox.shorter .bottomLeftHandler,
+#editBox.shorter .bottomRightHandler{
+    display: none;
+}
+#editBox .topLeftHandler:active,#editBox .topRightHandler:active,#editBox .bottomLeftHandler:active,#editBox .bottomRightHandler:active{
+    cursor: move;
+}
+#editBox.draggable .topLeftHandler,#editBox.draggable .topRightHandler,#editBox.draggable .bottomLeftHandler,#editBox.draggable .bottomRightHandler{
+    display: block;
+}
+#editBox  > div > ul{
+    min-width: 82px;
+    position: absolute;
+    left:0px;
+    top: 0px;
+    transform: translateY(-100%);
+    cursor: pointer;
+    /*padding-bottom: 3px;*/
+}
+#editBox.bottom  > div > ul {
+    min-width: 82px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    transform: translateY(100%);
+    cursor: pointer;
+    top: initial;
+    padding-bottom: initial;
+    padding-top: 0px;
+}
+#editBox  > div > ul li {
+    width: 100%;
+    height: 18px;
+    border-radius: 2px 2px 0 0;
+    margin-top: 1px;
+    padding: 0 5px;
+    color: #fff;
+    font-size: 12px;
+    background: #3197EF;
+    position: relative;
+}
+#editBox .bread li.container{
+    background-color: #60AEF1;
+}
+#editBox .bread li.grid{
+    background-color: #60AEF1;
+}
+#editBox .bread li.text{
+    background-color: #FD5C5C;
+}
+#editBox .bread li.widgets{
+    background-color: #FB9026;
+}
+#editBox .bread li.components{
+    background-color: #64beba;
+}
+#editBox.grid .operate-btns button{
+    background: #60AEF1;
+}
+#editBox.components .operate-btns button{
+    background: #64beba;
+}
+#editBox.widgets .operate-btns button{
+    background: #FB9026;
+}
+#editBox.text .operate-btns button{
+    background: #FD5C5C; 
+}
+#editBox.container .operate-btns button{
+    background: #60AEF1;
+}
+
+#editBox.container{
+    outline: 2px solid #60AEF1;
+} 
+#editBox.container .knob{
+    border-color: #60AEF1;
+}
+#editBox.text{
+    outline: 2px solid #FD5C5C;
+} 
+#editBox.text .knob{
+    border-color: #FD5C5C;
+}
+#editBox.grid{
+    outline: 2px solid #60AEF1;
+} 
+#editBox.grid .knob{
+    border-color: #60AEF1;
+}
+#editBox.widgets{
+    outline: 2px solid #FB9026;
+} 
+#editBox.widgets .knob{
+    border-color: #FB9026;
+}
+#editBox.components{
+    outline: 2px solid #64beba;
+} 
+#editBox.components .knob{
+    border-color: #64beba;
+}
+#editBox  > div > ul li:before{
+    content: "";
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    background:url(../img/operate_btn_move.png) center no-repeat;
+}
+#editBox  > div > ul li[data-operate="move"]{
+    padding-right: 20px;
+}
+#editBox  > div > ul li[data-operate="move"]:before{
+    display: block;
+}
+#editBox.bottom > div > ul li {
+    border-radius: 0 0 2px 2px;
+}
+#editBox.bottom > div > ul > li:first-child{
+    margin-top: 0;
+}
+#editBox  > div > ul li + ul {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    transform: translateY(-100%);
+}
+#editBox  > div > ul:hover ul {
+    display: block;
+}
+#editBox.bottom  > div > ul li + ul {
+    position: absolute;
+    width: 100%;
+    top: 16px;
+    transform: none;
+}
+#tempEditBox{
+    border: 2px dashed #3197EF;
+    position: absolute;
+    pointer-events: none;
+}
+/*选中框样式 结束*/
+
+/*面板公共样式 开始*/
+.panel{
+    width: 330px;
+    box-shadow: 0 0 24px 0 rgba(0,0,0,0.22), 0 24px 24px 0 rgba(0,0,0,0.30);
+    position: fixed;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.panel#colorPicker{
+    border-radius: 0;
+}
+.panel#colorPicker input{
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 2px rgba(0,0,0,.1);
+}
+.panel.popuptips{
+    border-radius: 4px;
+    background-color: #fdfdfd;
+}
+.panel.large{
+    width: 640px;
+}
+.panel .dialog-title{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-image: linear-gradient(-90deg, #4DA8F6 1%, #3197EF 99%);
+    padding: 0 15px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    cursor: move;
+}
+#PageManageDialog.panel{
+    border-radius: 8px;
+}
+#PageManageDialog.panel .dialog-title{
+    border-radius: 8px 8px 0 0;
+}
+#PageManageDialog.panel .panel-footer {
+    border-radius: 0 0 8px 8px;
+}
+#PageManageDialog.panel .dialog-title.bottomRadious{
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.panel .dialog-title h1{
+    font-size: 12px;
+    color: #FFFFFF;
+    font-family: "微软雅黑";
+    flex: 1;
+}
+.panel .dialog-content{
+    background: #fff;
+    height: 520px;
+    box-shadow: 0 -1px 0 0 rgba(0,0,0,0.10), 0 1px 0 0 rgba(0,0,0,0.10);
+    overflow-y: auto;
+}
+.panel#productSet .dialog-content > div{
+    height: 100%;
+}
+#PageManageDialog.panel .dialog-content{
+    overflow:hidden;
+}
+.panel.large .dialog-content{
+    height: 380px;
+}
+.panel .panel-footer{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: #fff;
+    /*padding: 0 10px;*/
+    box-shadow: 0 -1px 0 0 rgba(0,0,0,0.05);
+    border-radius:0;
+}
+#PageManageDialog.panel .panel-footer{
+    background-image: linear-gradient(-90deg, #4DA8F6 1%, #3197EF 99%);
+}
+.panel .dialog-title .close{
+    /*width: 20px;
+    height: 20px;*/
+    cursor: pointer;
+    font-size: 0;
+}
+.panel .dialog-title.large,.panel .panel-footer.large{
+    height: 56px;
+    line-height: 56px;
+    text-align: right;
+}
+#dialogsContainer .dialog-mask{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    /*z-index: 10006;*/
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+/*面板公共样式 结束*/
+
+/*图标公共样式 开始*/
+.icon{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+}
+.icon.spreadpanle{
+    background-image: url(../img/icon_spreadpanle.png);
+}
+.icon.pickuppanle  {
+    background-image: url(../img/icon_pickuppanle.png);
+}
+.icon.closepanle{
+    background-image: url(../img/icon_closepanle.png);
+    display: none;
+}
+.icon.page-handle{
+    background-image: url(../img/page-handle.png);
+}
+.icon.icon-tag-home{
+    background-image: url(../img/icon-tag-home.png);
+    margin-right: 5px;
+    display: none;
+    position: relative;
+}
+.icon.icon-tag-set{
+    background-image: url(../img/icon-tag-set.png);
+    cursor: pointer;
+    position: relative;
+}
+.icon.siteStyleReplace{
+    background-image: url(../img/siteStyleReplace.png);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+/*图标公共样式 结束*/
+
+/*页面管理等具体面板样式 开始*/
+.panel .tabGroupBox{
+    height: 50px;
+    line-height: 50px;
+    background: #FFFFFF;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.10);
+    font-size: 0;
+    text-align: center;
+}
+.panel .tabGroupBox .pageManage,.columnManage,.styleEditing{
+    width: calc(100% / 3);
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+}
+.panel .tabGroupBox i{
+    vertical-align: middle;
+}
+.panel .tabGroupBox li span{
+    font-size: 12px;
+    color: #444444;
+    display: inline-block;
+    vertical-align: middle;
+}
+.panel .tabGroupBox li:before{
+    content: "";
+    width: 65px;
+    height: 3px;
+    background: #3197EF;
+    position: absolute;
+    bottom: 10px;
+    left: 53%;
+    transform: translateX(-50%);
+    display: none;
+}
+.panel .tabGroupBox .pageManage .icon{
+    background-image: url(../img/pageManage_default.png);
+}
+.panel .tabGroupBox .columnManage .icon{
+    background-image: url(../img/columnManage_default.png);
+}
+.panel .tabGroupBox .styleEditing .icon{
+    background-image: url(../img/styleEditing_default.png);
+}
+.panel .tabGroupBox .pageManage:hover:before,
+.panel .tabGroupBox .columnManage:hover:before,
+.panel .tabGroupBox .styleEditing:hover:before,
+.panel .tabGroupBox .pageManage.active:before,
+.panel .tabGroupBox .columnManage.active:before,
+.panel .tabGroupBox .styleEditing.active:before{
+    display: block;
+}
+.panel .tabGroupBox .pageManage:hover .icon,
+.panel .tabGroupBox .pageManage.active .icon{
+    background-image: url(../img/pageManage_hover.png);
+}
+.panel .tabGroupBox .columnManage:hover .icon,
+.panel .tabGroupBox .columnManage.active .icon{
+    background-image: url(../img/columnManage_hover.png);
+}
+.panel .tabGroupBox .styleEditing:hover .icon,
+.panel .tabGroupBox .styleEditing.active .icon{
+    background-image: url(../img/styleEditing_hover.png);
+}
+.panel .tabGroupBox .pageManage:hover span,
+.panel .tabGroupBox .columnManage:hover span,
+.panel .tabGroupBox .styleEditing:hover span,
+.panel .tabGroupBox .pageManage.active span,
+.panel .tabGroupBox .columnManage.active span,
+.panel .tabGroupBox .styleEditing.active span{
+    color: #3197EF;
+}
+.panel .pageListBox .list_items{
+    height: 40px;
+    line-height: 40px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.panel .pageListBox .list_items:hover{
+    /*background: rgba(49,151,239,0.10);*/
+    /*box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);*/
+}
+.panel .pageListBox .list_items:hover:before,.panel .pageListBox .list_items.current:before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(49,151,239,0.10);
+}
+.panel .pageListBox .list_items span{
+    font-size: 12px;
+    color: #616161;
+    flex: 1;
+    padding: 0 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.panel .pageListBox .list_items.homePage .icon.icon-tag-home{
+    display: block;
+}
+.panel .pageListBox .list_items .icon.icon-tag-set:hover{
+    background-image: url(../img/icon-tag-set_hover.png);
+}
+.panel .pageListBox,.columnListBox,.styleListBox{
+    overflow-y: auto;
+    height: calc(100% - 50px);
+    margin-top: 1px;
+    background: #fff;
+}
+.panel .columnListBox .list_items{
+    height: 48px;
+    line-height: 48px;
+    background: #FFFFFF;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+}
+.panel .columnListBox .list_items:hover{
+    /*background: rgba(49,151,239,0.10);*/
+}
+.panel .columnListBox .list_items:hover:before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(49,151,239,0.10);
+}
+.panel .columnListBox .list_items span{
+    font-size: 14px;
+    color: rgba(0,0,0,0.87);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.panel .columnListBox .list_items .icon-checkbox{
+    background-image: url(../img/checkbox.png);
+    margin-left: 15px;
+}
+.panel .columnListBox .list_items .icon-checkbox:hover{
+    background-image: url(../img/checkbox_hover.png);
+}
+.panel .columnListBox .list_items .icon-checkbox.active{
+    background-image: url(../img/checkbox_active.png);
+}
+.panel .styleListBox .list_items{
+    line-height: 50px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    flex-wrap: wrap;
+}
+.panel .styleListBox .list_items:before{
+    content: "";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 49px;
+    left: 0;
+    background: #EBECF0;;
+}
+.panel .styleListBox .list_items.spread + .list_items:before{
+    top: 0;
+}
+.panel .styleListBox .list_items:hover{
+    background: #EAF7FF;
+}
+.panel .styleListBox .list_items > span{
+    font-size: 12px;
+    color: #595959;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: calc(100% - 35px);
+    padding-left: 15px;
+}
+.panel .styleListBox .list_items .arrow_top{
+    background-image: url(../img/arrow_top.png);
+    margin-right: 15px;
+}
+.panel .styleListBox .list_items.spread .arrow_top{
+    background-image: url(../img/arrow_bottom.png);
+}
+.panel .styleListBox .list_items.spread .siteStyle,.panel .styleListBox .list_items.spread .outset_inset_back{
+    display: block;
+}
+.panel .styleListBox .list_items .siteStyle{
+    padding: 15px 5px 0 5px;
+    flex: 1;
+    display: none;
+    height: 370px;
+    background: #fff;
+    overflow-y: auto;
+}
+.panel .styleListBox .list_items .siteStyle li,
+.panel .dialog-content .plateTypeBox .right li,
+.panel .dialog-content .colourSystemBox li{
+    width: 142.5px;
+    height: 104px;
+    background: #FFFFFF;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+    display: inline-block;
+    margin: 0 5px 15px 10px;
+}
+.panel .styleListBox .list_items .siteStyle li img,
+.panel .dialog-content .plateTypeBox .right li img,
+.panel .dialog-content .colourSystemBox li img{
+    width: 100%;
+    height: 75px;
+    display: block;
+}
+.panel .styleListBox .list_items .siteStyle li span,
+.panel .dialog-content .plateTypeBox .right li span,
+.panel .dialog-content .colourSystemBox li span{
+    height: 29px;
+    line-height: 29px;
+    display: block;
+    font-size: 12px;
+    color: #000000;    
+    padding: 0 10px;
+}
+.panel .styleListBox .list_items .siteStyle li .siteStyleReplace,
+.panel .dialog-content .plateTypeBox .right li .siteStyleReplace,
+.panel .dialog-content .colourSystemBox li .siteStyleReplace{
+    float: right;
+    margin-top: 4.5px;
+}
+/*内外背景面板样式*/
+.panel .styleListBox .list_items .outset_inset_back{
+    padding: 15px;
+    flex: 1;
+    background:#fff;
+    line-height: normal;
+    font-size: 0;
+    width: 100%;
+    display: none;
+}
+.panel .styleListBox .list_items .outset_inset_back > div{
+    border-bottom: 1px solid #D8D8D8;
+}
+.panel .styleListBox .list_items .tab_inset_bac,.panel .styleListBox .list_items .tab_outset_bac{
+    width: 50%;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    font-size: 12px;
+    color: #000000;
+    display: inline-block;
+    text-align: center;
+    border-bottom: none;
+}
+.panel .styleListBox .list_items .tab_inset_bac.current{
+    background: #3298EF;
+    border-color: #3298EF;
+    color: #fff;
+    border-right: none;
+}
+.panel .styleListBox .list_items .tab_outset_bac.current{
+    background: #3298EF;
+    border-color: #3298EF;
+    color: #fff;
+    border-left: none;
+}
+.panel .styleListBox .list_items .bg-upload{
+    padding: 5px 25px 15px 25px;
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+}
+.panel .styleListBox .list_items .bg-upload .view{
+    width: 65px;
+    height: 36px;
+    float: left;
+    background-image: url(../img/nopic-s.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+}
+.panel .styleListBox .list_items .bg-upload .recovering,.panel .styleListBox .list_items .bg-upload .uploading{
+    float: right;
+}
+.panel .styleListBox .list_items.spread:hover{
+    background: #fff;
+}
+.panel .styleListBox .list_items .stretchMode,.alignMode,.fillMode,.fillColor,.forgradientcolor{
+    width: 100%;
+    padding: 10px 25px;
+    line-height: normal;
+}
+.forgradientcolor .rotateGroup{
+    padding-top: 10px;
+    position: relative;
+}
+.forgradientcolor li,.forgradientcolor span,.forgradientcolor .angleBox,.forgradientcolor .angleNum{
+    font-size: 12px;
+    color: #414141;
+    display: inline-block;
+    vertical-align: middle;
+}
+.angleNum{
+    margin-left: 43px;
+}
+.angleBox{
+    margin-left: 24px;
+}
+.forgradientcolor .endColor,.startColor{
+    width: 40px;
+    height: 25px;
+    padding: 2px;
+    border-radius: 6px;
+    border: 1px solid rgb(198, 203, 208);
+}
+.forgradientcolor .endColor > b,.forgradientcolor .startColor > b{
+    background: url(../img/bg_transparent.gif) repeat scroll 0 -3px rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+}
+.forgradientcolor .startColor{
+    margin-right: 108px;
+}
+.forgradientcolor .rotateGroup .angleNum > input{
+    width: 50px;
+    border: 1px solid rgb(198, 203, 208);
+    border-radius: 4px;
+    height: 28px;
+    line-height: inherit;
+    padding-left: 8px;
+    font-size: 12px;
+    color: #414141;
+}
+.panel .styleListBox .list_items .stretchMode span,.alignMode span,.fillMode span,.fillColor span{
+    font-size: 12px;
+    color: #414141;
+}
+.panel .styleListBox .list_items .stretchMode select,.alignMode select,.fillMode select,.fillColor > div{
+    width: 80px;
+    background: none repeat scroll 0 0 rgb(255, 255, 255);
+    border: 1px solid rgb(198, 203, 208);
+    border-radius: 4px;
+    height: 28px;
+    line-height: inherit;
+    padding-left: 5px;
+    font-size: 12px;
+    float: right;
+    color: #414141;
+}
+.panel .styleListBox .list_items .fillColor > div{
+    width: 40px;
+    height: 25px;
+    padding: 2px;
+    border-radius: 6px;
+    position: relative;
+}
+.panel .styleListBox .list_items .fillColor > div:before{
+    content: "";
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    position: absolute;
+    background: url(../img/bg_transparent.gif) repeat scroll -1px -1px rgba(0, 0, 0, 0);
+    border-radius: 4px;
+}
+.panel .styleListBox .list_items .fillColor > div b{
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+    position: relative;
+}
+.panel .styleListBox .list_items .insideContent,.outerContent{
+    width: 100%;
+}
+.panel .dialog-content .modifyTabBox{
+    height: 50px;
+    line-height: 50px;
+    font-size: 0;
+    text-align: left;
+    background: #EAF7FF;
+}
+.panel .dialog-content .modifyTabBox .replacePlateType,.replaceColourSystem,.revealSetting{
+    width: 88px;
+    font-size: 12px;
+    color: #2E2E2E;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+.panel .dialog-content .modifyTabBox .replacePlateType:hover,
+.replaceColourSystem:hover,
+.revealSetting:hover,.panel .dialog-content .modifyTabBox .replacePlateType.current,
+.replaceColourSystem.current,
+.revealSetting.current
+{
+    background: #fff;
+    color: #000;
+}
+.panel .dialog-content .plateTypeBox{
+    height: calc(100% - 50px);
+    background: #fff;
+}
+.panel .dialog-content .plateTypeBox .left{
+    width: 158px;
+    height: 100%;
+    float: left;
+    box-shadow: inset -1px 0 0 0 rgba(0,0,0,0.10);
+    overflow-y: auto;
+}
+.panel .dialog-content .plateTypeBox .left li{
+    width: 100%;
+    height: 43px;
+    line-height: 43px;
+    font-size: 12px;
+    color: #313131;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.panel .dialog-content .plateTypeBox .left li:hover,.panel .dialog-content .plateTypeBox .left li.current{
+    background: #389BF1;
+    box-shadow: inset -1px 0 0 0 rgba(0,0,0,0.10);
+    color: #fff;
+}
+.panel .dialog-content .plateTypeBox .right{
+    width: 482px;
+    height: 100%;
+    float: right;
+}
+.panel .dialog-content .plateTypeBox .right{
+    padding: 15px 0 15px 15px;
+    font-size: 0;
+    overflow-y: auto;
+}
+.panel .dialog-content .plateTypeBox .right li{
+    margin: 0 10px 10px 0;
+    width: 144px;
+    cursor: pointer;
+}
+.panel .dialog-content .plateTypeBox .right li:nth-child(3n){
+    margin-right: 0;
+}
+.panel .dialog-content .colourSystemBox{
+    height: calc(100% - 50px);
+    padding: 20px 0 20px 20px;
+    font-size: 0;
+    overflow-y: auto;
+    background: #fff;
+}
+.panel .dialog-content .colourSystemBox li{
+    margin: 0 10px 10px 0;
+    width: 142.5px;
+    cursor: pointer;
+}
+.panel .dialog-content .colourSystemBox li:nth-child(4n){
+    margin-right: 0;
+}
+.panel .dialog-content .revealSettingSBox{
+    font-size: 0;
+    padding: 30px 0 0 35px;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+}
+.panel .dialog-content .revealSettingSBox label,
+.panel .dialog-content #pageSetting .pageSetToIndex label{
+    width: 34px;
+    height: 14px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.panel .dialog-content .revealSettingSBox label input,
+.panel .dialog-content #pageSetting .pageSetToIndex label input{
+    visibility: hidden;
+}
+.panel .dialog-content .revealSettingSBox label i,
+.panel .dialog-content #pageSetting .pageSetToIndex label i{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(34,31,31,0.26);
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+}
+.panel .dialog-content .revealSettingSBox label input:checked + i,
+.panel .dialog-content #pageSetting .pageSetToIndex label input:checked + i{
+    background: rgba(53, 153, 240,.5);
+}
+.panel .dialog-content .revealSettingSBox label i:before,
+.panel .dialog-content #pageSetting .pageSetToIndex label i:before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #F1F1F1;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24);
+    transition: all 0.3s;
+    left: -5px;
+}
+.panel .dialog-content .revealSettingSBox label input:checked + i:before,
+.panel .dialog-content #pageSetting .pageSetToIndex label input:checked + i:before{
+    display: block;
+    left: 20px;
+    background: #379BF1;
+}
+.panel .dialog-content .revealSettingSBox li{
+    width: 125px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 90px;
+    margin-bottom: 35px;
+}
+.panel .dialog-content .revealSettingSBox li:nth-child(3n){
+    margin-right: 0;
+}
+.panel .dialog-content .revealSettingSBox li span{
+    font-size: 12px;
+    color: #2E2E2E;
+    display: inline-block;
+    vertical-align: middle;
+    width: 88px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.panel .dialog-content .revealSettingSBox li input{
+    float: right;
+}
+#dialogsContainer>div{
+    position: relative
+}
+#dialogsContainer{
+    width: 0px;
+    height: 0px;
+    position: relative;
+    z-index: 10;
+}
+.panel .dialog-content #pageSetting{
+    padding: 55px 70px 0 70px;
+    background: #fff;
+    position: relative;
+    height: 100%;
+}
+.panel .dialog-content #pageSetting span{
+    font-size: 12px;
+    color: #2E2E2E;
+    margin-right: 37px;
+}
+.panel .dialog-content #pageSetting input[type="text"]{
+    width: 330px;
+    height: 30px;
+    color: rgba(0,0,0,0.38);
+    border: none;
+    box-shadow: 0px -2px rgba(0,0,0,0.12) inset;
+}
+.panel .dialog-content #pageSetting input[type="text"]:focus {
+    box-shadow: 0px -2px #3197EF inset;
+    color: #fff;
+    outline: none;
+    color: rgba(0,0,0,0.87);
+}
+.panel .dialog-content #pageSetting .pageSetToIndex span:last-of-type{
+    color: #AEAEAE;
+    margin-right: 5px;
+}
+.panel .dialog-content #pageSetting .pageName,.pageAddress,.pageSetToIndex{
+    margin-bottom: 30px;
+}
+.panel .dialog-content #pageSetting .pageSetToIndex i.icon{
+    background-image: url(../img/set_to_home.png);
+}
+#editBox .componentEditing.dataMove  > button.changeCategory{
+    display: inline-block;
+}
+/*页面管理等具体面板样式 结束*/
+
+/*颜色面板样式 开始*/
+.farbtastic {
+  position: relative;
+}
+.farbtastic * {
+  position: absolute;
+  cursor: crosshair;
+}
+.farbtastic, .farbtastic .wheel {
+  width: 150px;
+  height: 150px;
+}
+.farbtastic .color, .farbtastic .overlay {
+  top: 35px;
+  left: 35px;
+  width: 79px;
+  height: 79px;
+}
+.farbtastic .wheel {
+  background: url(../img/wheel.png) no-repeat;
+  width: 151px;
+  height: 150px;
+  background-size: 100% 100%;
+  left: -1px;
+}
+.farbtastic .overlay {
+  background: url(../img/mask.png) no-repeat;
+  background-size: 100% 100%;
+}
+.farbtastic .marker {
+  width: 17px;
+  height: 17px;
+  margin: -8px 0 0 -8px;
+  overflow: hidden;
+  background: url(../img/marker.png) no-repeat;
+  background-size: 100% 100%;
+}
+.dialog-content .ui_header.color_project {
+    padding: 15px 15px 23px 15px;
+}
+#colorPicker .ui_header ul li {
+    width: 24px;
+    height: 24px;
+    float: left;
+    margin: 0px 9px 8px 0;
+    padding: 1px;
+    border-radius: 50%;
+    /*border: 1px solid #C6CBD0;*/
+    cursor: pointer;
+}
+#colorPicker .ui_header ul li:nth-child(8n){
+    margin-right: 0;
+}
+#colorPicker .ui_header ul li >div {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+.dialog-content .ui_content {
+    position: relative;
+    padding: 0 15px;
+}
+.ui_content_lefter {
+    float: left;
+    width: 150px;
+}
+.ui_content_righter.color_code {
+    position: absolute;
+    right: 15px;
+    bottom: 6px;
+    float: right;
+}
+.ui_content_righter ul li {
+    text-align: right;
+    font-size: 12px;
+    color: #414141;
+    margin-bottom: 5px;
+}
+#input_r,#input_g,#input_b{
+    width: 45px;
+    height: 28px;
+    border: 1px solid #c6cbd0;
+    margin-left: 10px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+#input_r, #input_b, #input_g, #color{
+    padding-left: 8px;
+    font-size: 12px;
+    color: #414141;
+}
+#color {
+    width: 64px;
+    height: 28px;
+    border: 1px solid #c6cbd0;
+    margin-left: 10px;
+    border-radius: 4px;
+}
+.clear {
+    clear: both;
+}
+.ui_footer.color_alpha {
+    padding: 15px 15px 28px 15px;
+}
+.ui_footer ul li {
+    margin: 0 5px;
+    float: left;
+    font-size: 12px;
+    color: #414141;
+}
+.ui_footer ul li:last-of-type{
+    margin:0 0 0 5px;
+}
+.ui_footer ul li.trans {
+    padding-top: 5px;
+    font-size: 12px;
+    color: #414141;
+    margin-left: 0;
+}
+.ui_footer ul li.slider-range-min-li {
+    padding-top: 13px;
+    margin-right: 10px;
+}
+.ui-slider {
+    position: relative;
+    text-align: left;
+    border-radius: 4px;
+}
+#slider-range-min {
+    width: 80px;
+    height: 2px;
+    background: rgba(0,0,0,0.26);
+}
+/*#slider-range-min .ui-slider-range-min {
+    background-image: linear-gradient(to bottom, #d9dcde 0px, #e0e3e5 100%)!important;
+    background-repeat: repeat-x!important;
+}*/
+#slider-range-min .ui-corner-all {
+    background: #fff;
+}
+#slider-range-min .ui-widget-header {
+    border-bottom: none!important;
+}
+.ui-slider-horizontal .ui-slider-range-min {
+    left: 0;
+}
+.ui-slider-horizontal .ui-slider-range {
+    top: 0;
+    height: 100%;
+}
+.ui-slider .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background-position: 0 0;
+}
+#slider-range-min .ui-corner-all {
+    background: #45A4F5;
+}
+.ui-slider-horizontal .ui-slider-handle {
+    top: -8px;
+    margin-left: -.6em;
+    outline: none;
+}
+.ui-slider .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    /*border: 1px solid #d3d3d3;*/
+    border: none;
+    border-radius: 1.2em;
+    cursor: default;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+#amount {
+    border: 1px solid #c6cbd0;
+    color: #686d71;
+    font-weight: normal;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #414141;
+}
+.ui_footer input {
+    width: 28px;
+    height: 20px;
+    text-align: center;
+}
+.ui_footer dl {
+    width: 60px;
+    /*border: 1px solid #c4c9ce;*/
+    border-radius: 4px;
+     margin-top: 2px; 
+     overflow:hidden;
+}
+.ui_footer dl dt {
+    float: left;
+    width: 30px;
+    height: 28px;
+}
+.ui_footer dl dd {
+    float: left;
+    width: 30px;
+    height: 28px;
+    margin-left: 0;
+}
+.rotatebox {
+    width: 100px;
+    height: 100px;
+    background: url(../img/deg_bg.png) no-repeat center center;
+    left: 10px;
+    position: relative;
+}
+.rotate {
+    width: 100px;
+    height: 100px;
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    position: relative;
+}
+.rotate .handle {
+    width: 16px;
+    height: 16px;
+    background-position: -601px -504px;
+    background-image: url(../img/zd-ui.png);
+    top: 42px;
+    right: 12px;
+    cursor: pointer;
+    position: absolute;
+}
+.rotate .handarm {
+    width: 23px;
+    height: 1px;
+    background-color: rgba(0,0,0,.3);
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    top: 49px;
+    right: 28px;
+    transform-origin: 100% 100%;
+    -webkit-transform-origin: 100% 100%;
+    -moz-transform-origin: 100% 100%;
+    -ms-transform-origin: 100% 100%;
+    position: absolute;
+}
+/*颜色面板样式 结束*/
+
+/*内容组显示隐藏样式 开始*/
+div[data-cg-visible=true]{
+    display: block;
+}
+div[data-cg-visible=false]{
+    display: none;
+}
+/*内容组显示隐藏样式 结束*/
+
+/*reset_style 开始*/
+.reset_style {
+    font-family: Microsoft Yahei, Arial, Verdana, sans-serif;
+    color: #707070;
+    line-height: normal;
+    word-wrap: break-word;
+    word-break:break-all;
+    font-size: 12px;
+}
+ .reset_style h1 {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+}
+.reset_style h2 {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+}
+.reset_style h3 {
+    font-weight: bold;
+    font-size: 19px;
+    margin: 0;
+}
+.reset_style h4 {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+}
+.reset_style h5 {
+    font-weight: bold;
+    font-size: 13px;
+    margin: 0;
+}
+.reset_style h6 {
+    font-weight: bold;
+    font-size: 11px;
+    margin: 0;
+}
+.reset_style p {
+    margin:0;
+    font-size: 12px;
+}
+.reset_style > span{
+    font-size: 12px;
+ }
+.reset_style a,.resetHtmlCssStyle .reset_style a {
+    text-decoration: none !important;
+    color: #00E;
+}
+ .reset_style em{
+    font-style: italic;
+ }
+.reset_style ul,
+.reset_style ol {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.reset_style ul,.resetHtmlCssStyle .reset_style ul {
+    list-style: disc outside none;
+}
+.reset_style ol,.resetHtmlCssStyle .reset_style ol {
+    list-style: decimal outside none;
+}
+.reset_style li {
+    display: list-item;
+    list-style-type: inherit;
+}
+#richTextEditor{
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*height: 100%;*/
+}
+/*reset_style 结束*/
+
+/*组件库样式 开始 2018.3.13 huanghe*/
+#components,#propertySettings{
+    width: 220px;
+    height: 100%;
+    /*padding:2px;*/
+    position: absolute;
+    /*background: #f2f2f2;*/
+}
+#components{
+    box-shadow: 1px 0 0 0 #E5E5E5;
+}
+#propertySettings{
+    box-shadow: -1px 0 0 0 #E5E5E5;
+}
+#components ::-webkit-scrollbar,#propertySettings ::-webkit-scrollbar {
+    width:4px;
+}
+#components > div{
+    overflow-y: auto;
+    height: calc(100% - 50px);
+    background: #fff;
+}
+#components > .listTitle{
+   height: 50px;
+   width: 100%;
+   line-height: 49px;
+   padding: 0 15px;
+   /*margin-bottom: 5px;*/
+   font-size: 12px;
+   color: #070707;
+   display: block;
+   background-color: #fff;
+   border-bottom: 1px solid #F3F3F3;
+}
+#propertySettings .tabGroup{
+    font-size: 0;
+    box-shadow: 0 1px 0 0 #F7F7F7;
+    margin-bottom: 1px;
+    background: #fff;
+}
+#propertySettings .tabGroup > span{
+    width: calc(100% / 4);
+    height: 48px;
+    line-height: 48px;
+    display: inline-block;
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+    text-align: center;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+#propertySettings .tabGroup > span:hover,#propertySettings .tabGroup > span.current{
+    border-bottom: 3px solid #3197EF;
+    color: #3197EF;
+    font-weight: bold;
+}
+#propertySettings .propsContainer{
+    height: calc(100% - 50px);
+    background: #fff;
+    overflow-y: auto;
+}
+#propertySettings .propsContainer.attrBox{
+    padding: 15px 0;
+}
+#components .listItems > div{
+    width: 100%;
+    /*height: 48px;
+    line-height: 48px;*/
+    background: #fff;
+    padding:0 15px;
+    position: relative;
+    /*border-bottom: 1px solid #f2f2f2;*/
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#components .listItems:first-of-type > div{
+    margin-top: 15px;
+}
+#components .listItems > div span{
+    font-size: 12px;
+    color: #4D4D4D;
+}
+#components .listItems > div i{
+    height: 24px;
+    width: 24px;
+    right: 10px;
+    top: 12px;
+    position: absolute;
+    background: url(../img/comp_pack.png) center no-repeat;
+}
+#components .listItems.current > div i{
+    background: url(../img/comp_spread.png) center no-repeat;
+}
+#components .listItems ul{
+    background: #fff;
+    /*border-bottom: 1px solid #f2f2f2;*/
+    padding: 0 10px 0 15px;
+}
+#components .listItems.current ul{
+    display: block;
+}
+#components .listItems ul h3{
+    font-size: 12px;
+    color: #4FA5FF;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#components .listItems ul li{
+    width: 92px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    margin: 0 5px 5px 0;
+    background: #ECF5FF;
+    border: 1px solid #B3D8FF;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    padding: 0 5px;
+}
+#components .listItems ul li:nth-child(2n){
+    margin-right: 0;
+}
+#components .listItems ul li:hover{
+    background: #409EFF;
+}
+#components .listItems ul li:hover h3{
+    color: #fff;
+}
+#components .listItems ul li img{
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+/*组件库样式 结束 2018.3.13 huanghe*/
+
+/*popuptips样式 开始*/
+.alert {
+    padding: 55px 60px 50px;
+}
+.alert-title h1 {
+    color: #707070;
+    font-size: 20px;
+    line-height: normal;
+    font-weight: normal;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    width: auto;
+}
+.succ-info {
+    margin-top: 0;
+    color: #707070;
+    font-size: 14px;
+    line-height: 20px;
+}
+.alert p {
+    color: #8d8d8d;
+}
+.alert .add-alert {
+    margin-left: 63px;
+}
+.icon-success {
+    background-image: url(../img/adopt.png);
+}
+.icon-alert-yellow{ background-position: -283px -615px }
+.icon-alert-red { background-position: -346px -615px}
+.loading_animation {
+    -moz-animation: three-quarters-loader 850ms infinite linear;
+    -webkit-animation: three-quarters-loader 850ms infinite linear;
+    animation: three-quarters-loader 850ms infinite linear;
+    border: 3px solid #60a9d7;
+    border-right-color: transparent;
+    border-radius: 16px;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    background-image: none;
+}
+@-webkit-keyframes three-quarters-loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes three-quarters-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+i {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url(../img/zd-ui.png);
+    background-repeat: no-repeat;
+}
+i.al {
+    width: 48px;
+    height: 48px;
+    background-color: #;
+}
+i.al.loading_animation {
+    width: 32px;
+    height: 32px;
+}
+/*popuptips样式 结束*/
+
+/*右侧面板样式 开始*/
+.sizeSettings .headerContainer,.animationSettings .headerContainer,
+.linesSettings .headerContainer,.overflowSettings .headerContainer{
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    background: #fff;
+    padding: 0 15px;
+    position: relative;
+   /* border-bottom: 1px solid #f2f2f2;*/
+}
+.sizeSettings .headerContainer{
+    display: none;
+}
+.sizeSettings .headerContainer > span,.linesSettings .headerContainer > span,.overflowSettings .headerContainer > span{
+    font-size: 14px;
+    color: rgba(0,0,0,0.87);
+    line-height: 48px;
+}
+.sizeSettings .headerContainer > i,
+.linesSettings .headerContainer > i,
+.overflowSettings .headerContainer > i{
+    height: 24px;
+    width: 24px;
+    right: 10px;
+    top: 12px;
+    position: absolute;
+    background: url(../img/comp_pack.png) center no-repeat;
+}
+.sizeSettings.expand .headerContainer > i,
+.linesSettings.expand .headerContainer > i,
+.overflowSettings.expand .headerContainer > i {
+    background: url(../img/comp_spread.png) center no-repeat;
+}
+.animationSettings .contentContainer,
+.linesSettings .contentContainer,.overflowSettings .contentContainer{
+    display: none;
+    padding: 0 15px;
+    /*border-bottom:1px solid  #F2F2F2; */
+}
+.sizeSettings .contentContainer{
+    padding: 15px;
+}
+.sizeSettings .contentContainer > div{
+    margin-bottom: 5px;
+}
+.sizeSettings.expand .contentContainer,.animationSettings.expand .contentContainer,
+.linesSettings.expand .contentContainer,.overflowSettings.expand .contentContainer{
+    display: block;
+}
+.layoutWidth,.layoutHeight {
+    overflow: hidden;
+    margin-top: 10px;
+}
+.layoutWidth > span,.layoutHeight > span{
+    border-radius: 3px;
+    float: left;
+    border: 1px solid #C8CDD2;
+    background-color: #fafafa;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.widthSignal {
+    width: 28px;
+    height: 28px;
+    background: url(../../img/layout_width.png) no-repeat center;
+}
+.heightSignal {
+    width: 28px;
+    height: 28px;
+    background: url(../../img/layout_height.png) no-repeat center;
+}
+.maxWidthSignal,.maxHeightSignal{
+    clear: both;
+}
+.minWidthSignal,.maxWidthSignal,.maxHeightSignal,.minHeightSignal{
+    width: 28px;
+    height: 28px;
+    line-height: 26px;
+    text-align: center;
+    font-size: 12px;
+    color: #707070;
+}
+.layoutWidth > input,.layoutHeight > input{
+    border-radius: 4px;
+    float: left;
+    border: 1px solid #C8CDD2;
+    background-color: #fff;
+    width: 50px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+}
+.layoutWidth .width,.layoutHeight .height{
+    width: 50px;
+}
+.tabMarginPadding {
+    overflow: hidden;
+    border-bottom: 1px solid rgba(50,152,239,0.10);
+}
+.marginTab {
+    background: #409EFF;
+    color: #fff;
+    width: 50%;
+    height: 34px;
+    line-height: 34px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+.paddingTab {
+    width: 50%;
+    height: 34px;
+    line-height: 34px;
+    float: left;
+    background: transparent;
+    text-align: center;
+    border-left: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #000;
+}
+.sizeSettings .contentContainer .settingBox {
+    margin: 25px auto 0 auto;
+    width: 107px;
+    height: 66px;
+    background: #F1F1F1;
+    border: 1px solid #D8DAE0;
+    position: relative;
+    margin-bottom: 20px;
+}
+.settingBox input {
+    width: 49px;
+    height: 28px;
+    line-height: 28px;
+    background: #FFFFFF;
+    border: 1px solid #C8CDD2;
+    border-radius: 4px;
+    position: absolute;
+    text-align: center;
+}
+.paddingSelect .paddingTab {
+    background: #409EFF;
+    color: #fff;
+}
+.paddingSelect .marginTab {
+    background:transparent;
+    color: #000;
+}
+.settingBox .mar_top,.settingBox .pad_top {
+    top: -14px;
+    left: 29px;
+}
+.settingBox .mar_right,.settingBox .pad_right {
+    top: 19px;
+    right: -24px;
+}
+.settingBox .mar_bottom,.settingBox .pad_bottom {
+    left: 29px;
+    bottom: -14px;
+}
+.settingBox .mar_left,.settingBox .pad_left {
+    top: 19px;
+    left: -24px;
+}
+.settingBox .paddingSettingBox {
+    display: none;
+}
+.paddingSelect + .settingBox .marginSettingBox {
+    display: none;
+}
+.paddingSelect + .settingBox .paddingSettingBox {
+    display: block;
+}
+.maxWidth,.maxHeight{
+    margin-right: 10px;
+}
+.animationSettings .headerContainer > span{
+    font-size: 14px;
+    color: rgba(0,0,0,0.87);
+    line-height: 48px;
+}
+.animationSettings .headerContainer label, .revealSettingSBox li > label{
+    width: 34px;
+    height: 14px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    vertical-align: middle;
+    cursor: pointer;
+}
+.revealSettingSBox li > label{
+    right: 0px;
+}
+.animationSettings .headerContainer label input ,.revealSettingSBox li > label input{
+    visibility: hidden;
+}
+.animationSettings .headerContainer label i,.revealSettingSBox li > label i {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(34,31,31,0.26);
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+}
+.animationSettings .headerContainer label i:before,.revealSettingSBox li > label i:before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #F1F1F1;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24);
+    transition: all 0.3s;
+    left: -5px;
+}
+.animationSettings.expand .headerContainer label i,.revealSettingSBox li > label input:checked + i{
+    background: rgba(53, 153, 240,.5);
+}
+.animationSettings.expand .headerContainer label i:before,.revealSettingSBox li > label input:checked + i:before{
+    display: block;
+    left: 20px;
+    background: #379BF1;
+}
+.animationEffectBox,.animationDurationBox,.animationDelayBox {
+    margin-top: 15px;
+}
+.animationEffectBox > h2,.animationDurationBox > div > h2,.animationDelayBox > div > h2{
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+    margin-bottom: 5px;
+}
+.animationEffectBox > div{
+    width: 100%;
+    position: relative;
+    display: table;
+}
+.animationEffectBox > div .response-animate-name,.contentContainer > select{
+    height: 32px;
+    display: table-cell;
+    padding: 0 0 0 5px;
+    transition: border-color 0.15s ease 0s;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 1px rgba(0,0,0,.1);
+}
+.animationEffectBox > div a{
+    cursor: pointer;
+    border-radius: 4px;
+    display: table-cell;
+    position: relative;
+    text-align: center;
+    width: 28px;
+}
+.icon-showeffect {
+    background-position: -339px -450px;
+}
+i.bs {
+    width: 16px;
+    height: 16px;
+    vertical-align: -3px;
+}
+.slider-spinner {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+.slider-spinner .sliders{
+    width: 125px;
+    float: left;
+    margin-top: 15px;;
+    box-sizing: border-box;
+    border-color: #c6cbd0;
+    height: 2px;
+    border-radius: 4px;
+    /*background: rgba(74, 163, 231,.35);*/
+    background: rgba(0,0,0,0.26);
+    /*box-shadow: inset 0 1px 3px 0 #4AA3E7;*/
+    position: relative;
+    margin-left: 10px;
+}
+.slider-spinner .sliders > div{
+    border-radius: 4px;
+    /*box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) inset;*/
+    height: 100%;
+    position: absolute;
+    background: #409EFF;
+    transition-duration: 0.4s, 0.4s, 0.4s;
+    transition-property: color, box-shadow, background;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+.slider-spinner .sliders > span,
+.slider-spinner .sliders > a{
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    margin-left: -0.6em;
+    top: -8px;
+    position: absolute;
+    z-index: 2;
+    /*border: 1px solid #d3d3d3;*/
+    border: none;
+    border-radius: 1.2em;
+    background: #409EFF;
+    cursor: pointer;
+}
+.slider-spinner .sliders > span:after,
+.slider-spinner .sliders > a:after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #4AA3E7;
+    border-radius: 50%;
+}
+.slider-spinner > input{
+    width: 40px;
+    height: 20px;
+    float: right;
+    line-height: inherit;
+    padding: 0;
+    transition: border-color 0.15s ease 0s;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 2px rgba(0,0,0,.1);
+}
+.revealSettingSBox{
+    padding: 25px 15px;
+}
+.revealSettingSBox li{
+    position: relative;
+    margin-bottom: 35px;
+}
+.revealSettingSBox li > span{
+    font-size: 12px;
+    color: #2E2E2E;
+}
+.colourSystemBox{
+    padding:15px;
+}
+.colourSystemBox li{
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+    display: inline-block;
+    margin-bottom:15px;
+}
+.colourSystemBox li img {
+    width: 100%;
+    height: 90px;
+    display: block;
+}
+.colourSystemBox li span {
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    font-size: 12px;
+    color: #000000;
+    padding: 0 10px;
+    position: relative;
+}
+.colNumbers > h2,.rowNumbers > h2,.contentContainer > h2{
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+    margin-bottom: 5px;
+}
+.colNumbers{
+    margin-bottom: 15px;
+}
+/*右侧面板样式 结束*/
+
+/*编辑区样式 开始*/
+/*.top,.left,.bottom,.right,.topLeft,.bottomLeft,.bottomRight,.topRight{
+    position: absolute;
+}*/
+#editBox .top {
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    cursor: n-resize;
+}
+#editBox .left {
+    height: 100%;
+    width: 10px;
+    position: absolute;
+    left: -0;
+    cursor: w-resize;
+    top: 0px;
+}
+#editBox .bottom {
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    bottom: -0;
+    cursor: n-resize;
+}
+#editBox .topLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    cursor: nw-resize;
+    z-index: 2;
+}
+#editBox .right {
+    height: 100%;
+    width: 10px;
+    position: absolute;
+    right: -0;
+    cursor: w-resize;
+    top: 0;
+}
+#editBox .bottomLeft {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    cursor: sw-resize;
+    z-index: 2;
+}
+#editBox .bottomRight {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    cursor: se-resize;
+    z-index: 2;
+}
+#editBox .topRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    cursor: ne-resize;
+    z-index: 2;
+}
+#editBox .knob{
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    border: 1px solid #4aa3e7;
+}
+#editBox .top .knob {
+    top: 0;
+    left: 50%;
+    margin-left: -4px;
+}
+#editBox .left .knob {
+    left: 0;
+    top: 50%;
+    margin-top: -4px;
+}
+#editBox .bottom .knob {
+    bottom: 0;
+    left: 50%;
+    margin-left: -4px;
+}
+#editBox .right .knob {
+    right: 0;
+    top: 50%;
+    margin-top: -4px;
+}
+#editBox .topLeft .knob {
+    top: 0;
+    left: 0;
+}
+#editBox .bottomLeft .knob {
+    bottom: 0;
+    left: 0;
+}
+#editBox .bottomRight .knob {
+    bottom: 0;
+    right: 0;
+}
+#editBox .topRight .knob {
+    top: 0;
+    right: 0;
+}
+#editBox .operate-btns{
+    position: absolute;
+    right: 0;
+    top: -18px;
+}
+#editBox .operate-btns button{
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 7px 0 rgba(0,0,0,0.30);
+    border-radius: 3px;
+    float: right;
+    margin-left: 1px;
+    line-height: normal;
+    padding: 0;
+    font-size: 0;
+    border-radius: 3px 3px 0 0;
+}
+#editBox .operate-btns button:active{
+    background: #2C88D9;
+}
+#editBox .operate-btns .fixed i{
+    background-image: url(../img/operate_btn_fixed.png);
+    background-size: auto;
+    background-position: center;
+    width: 18px;
+    height: 18px;
+}
+#editBox .operate-btns .delete i{
+    background-image: url(../img/operate_btn_delete.png);
+    background-size: auto;
+    background-position: center;
+    width: 18px;
+    height: 18px;
+}
+#editBox.bottom .operate-btns{
+    top: auto;
+    bottom: -18px;
+}
+#editBox.bottom .operate-btns button{
+    border-radius: 0 0 3px 3px;
+}
+.fixedbrowser{
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/flow_fixedbrowser.png);
+    background-repeat: no-repeat;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    cursor: pointer;
+    background-position: -100px 1px;
+    display: none;
+    z-index: 99;
+}
+#editBox.isFixed .fixedbrowser{
+    display: block;
+}
+#editBox.bottom .fixedbrowser{
+    bottom: -15px;
+    top: initial;
+}
+#editBox.isFixed{
+    cursor: not-allowed;
+}
+#editBox.grid > .fixedbrowser{
+    background-position:-100px 1px ;
+}
+#editBox.components > .fixedbrowser{
+    background-position: 1px 1px;
+}
+#editBox.widgets > .fixedbrowser{
+    background-position: -150px 1px;
+}
+#editBox.text > .fixedbrowser{
+    background-position: -50px 1px;
+}
+/*编辑区样式 结束*/
+
+/*页面级样式面板 开始*/
+.fontStyleListBox{
+}
+.fontStyleListBox > ul > li > div:first-child {
+    width: 100%;
+    background: #fff;
+    padding: 0 15px;
+    position: relative;
+    cursor: pointer;
+}
+.fontStyleListBox > ul > li > div:first-child span {
+    font-size: 14px;
+    color: rgba(0,0,0,0.87);
+    line-height: 48px;
+}
+.fontStyleListBox > ul > li > div:first-child i {
+    height: 24px;
+    width: 24px;
+    right: 10px;
+    top: 12px;
+    position: absolute;
+    background: url(../img/comp_pack.png) center no-repeat;
+}
+.fontStyleListBox > ul > li > div:first-child.current i {
+    background: url(../img/comp_spread.png) center no-repeat;
+}
+.fontTypeBox{
+    padding: 0 15px;
+    margin: 10px 0 15px 0;
+}
+.fontStyleBox{
+    padding: 0 15px 15px 15px;
+    margin-top: 10px;
+}
+.fontTypeBox > h2,.fontStyleBox > h2{
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+}
+.fontTypeBox > div select,.fontStyleBox > div select{
+    height: 32px;
+    display: table-cell;
+    padding: 0 0 0 5px;
+    transition: border-color 0.15s ease 0s;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 2px rgba(0,0,0,.1);
+}
+.fontStyleListBox{
+    font-size: 0;
+}
+.editor_box a{
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.editor_box a.active{
+    box-shadow: 0px 2px 3px rgba(0,0,0,.1) inset;
+}
+.editor_box li{
+    display: inline-block;
+    font-size: 0;
+    margin-top: 10px;
+}
+.editor_box a i{
+    width: 100%;
+    height: 100%;
+}
+.text_color_group > a:last-child,.text_shadow_group > a:last-child{
+    border: 1px solid #C8CDD2;
+    border-radius: 4px;
+}
+.icon-fontcolor {
+    background-image: url(../img/icon-fontcolor.png);
+    background-position: center;
+    background-size: auto;
+}
+.showcolor {
+    background: url(../img/bg_transparent.gif) repeat scroll 0 -3px rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+}
+.icon-color {
+    background-image: url(../img/icon-color.png);
+    background-position: center;
+    background-size: auto;
+}
+.icon-bold {
+    background-image: url(../img/icon_bold.png);
+    background-position: center;
+    background-size: auto;
+}
+.icon-Italic {
+    background-image: url(../img/icon-Italic.png);
+    background-position: center;
+    background-size: auto;
+}
+.icon-unline {
+    background-image: url(../img/icon-unline.png);
+    background-position: center;
+    background-size: auto;
+}
+.icon-strikethrough {
+    background-image: url(../img/icon-strikethrough.png);
+    background-position: center;
+    background-size: auto;
+}
+.icon-letter-spacing {
+    background-image: url(../img/icon-letter-spacing.png);
+    background-position: center;
+    background-size: auto;
+}
+.icon-pixel {
+    background-position: -685px -214px;
+}
+.icon-line-height {
+    background-image: url(../img/icon-line-height.png);
+    background-position: center;
+    background-size: auto;
+}
+.editor_box li .fontSize,.fontStyleBox > div > .form-group input{
+    width: 48px;
+    height: 26px;
+    line-height: 26px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 1px rgba(0,0,0,.1);
+}
+.fontStyleBox > div > .form-group{
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 10px;
+}
+.fontStyleBox > div > .form-group a{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.fontStyleBox > div > .form-group input{
+    margin-left:5px;
+}
+.fontStyleBox > div > .form-group i{
+    width: 100%;
+    height: 100%;
+}
+.fontStyleBox > div > .form-group:last-child{
+    margin-left: 15px;
+}
+.outset_inset_back {
+    padding: 15px;
+    flex: 1;
+    background: #fff;
+    line-height: normal;
+    font-size: 0;
+    width: 100%;
+}
+.outset_inset_back > div {
+    border-bottom: 1px solid #D8D8D8;
+}
+.tab_inset_bac,.tab_outset_bac {
+    width: 50%;
+    height: 37px;
+    line-height: 37px;
+    background: #FFFFFF;
+    font-size: 12px;
+    color: #000000;
+    display: inline-block;
+    text-align: center;
+    border-bottom: none;
+    cursor: pointer;
+}
+.tab_inset_bac.current {
+    background: #3298EF;
+    border-color: #3298EF;
+    color: #fff;
+    border-right: none;
+}
+.bg-upload {
+    padding: 15px;
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+}
+.bg-upload .view {
+    width: 100%;
+    height: 108px;
+    float: left;
+    background-image: url(../img/nopic-s1.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+}
+.bg-upload .uploading {
+    float: right;
+    padding: 0 20px;
+    margin-top: 15px;
+    font-size: 12px;
+}
+.bg-upload .recovering {
+    float: left;
+    padding: 0 20px;
+    margin-top: 15px;
+    font-size: 12px;
+}
+.list_items .tab_outset_bac.current {
+    background: #3298EF;
+    border-color: #3298EF;
+    color: #fff;
+    border-left: none;
+}
+.list_items .stretchMode, .alignMode, .fillMode, .fillColor{
+    padding: 0 15px;
+    overflow:hidden;
+    margin-bottom: 5px;
+}
+.list_items .stretchMode span, .alignMode span, .fillMode span, .fillColor span {
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    color: #707070;
+    float: left;
+}
+.fillColor span{
+    /*margin-top: 4px;*/
+}
+.list_items .stretchMode select, .alignMode select, .fillMode select, .fillColor > div,.borderGroup.stylemode select{
+    height: 32px;
+    float: right;
+    padding: 0 5px 0 0;
+    transition: border-color 0.15s ease 0s;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: #707070;
+}
+.list_items .outset_inset_back {
+    padding: 0 15px;
+    flex: 1;
+    background: #fff;
+    line-height: normal;
+    font-size: 0;
+    width: 100%;
+}
+.list_items > span{
+    display: block;
+    padding: 15px;
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+}
+.list_items .fillColor > div {
+    width: 40px;
+    height: 25px;
+    padding: 2px;
+    border-radius: 6px;
+    border: 1px solid rgb(198, 203, 208);
+    position: relative;
+    margin-top: 4px;
+}
+.list_items .fillColor > div:before {
+    content: "";
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    position: absolute;
+    background: url(../img/bg_transparent.gif) repeat scroll -1px -1px rgba(0, 0, 0, 0);
+    border-radius: 4px;
+}
+.list_items .fillColor > div b {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+    position: relative;
+}
+.borderGroup > span{
+    display: block;
+    padding:  15px 15px 0 15px;
+    font-size: 12px;
+    color: #707070;
+}
+.borderGroup.stylemode,.borderGroup.styleColor,.borderGroup.GridColumns{
+    overflow: hidden;
+    margin-bottom: 17px;
+    padding: 0 15px;
+}
+.borderGroup.GridColumns + .s-15 + .s-15{
+    margin-bottom: 20px;
+}
+.borderGroup.stylemode > span{
+    float: left;
+    padding: 0;
+}
+.borderGroup.stylemode > select{
+    height: auto;
+    width: 80px;
+    text-align-last: right;
+}
+.borderGroup.styleColor > span{
+    line-height: 24px;
+    float: left;
+    padding: 0;
+    color:#707070;
+}
+.borderGroup.styleColor > div{
+    float: right;
+    position: relative;
+    height: 24px;
+}
+.del_set {
+    margin: 0;
+    padding: 0;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left: -20px;
+    top: 7px;
+    background: url(../img/zd-ui.png) no-repeat;
+    background-position: -568px -325px;
+    cursor: pointer;
+    /*display: none;*/
+}
+.showcolor b {
+    display: inline-block;
+    font-style: normal;
+    height: 100%;
+    width: 40px;
+    background: rgba(131, 210, 251,.3);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.borderGroup.GridColumns > span{
+    padding: 0;
+    color:#222222;
+}
+.borderGroup.GridColumns .col-2{
+    height: 20px;
+    width: calc((100% - 25px) / 6);
+    line-height: 20px;
+    float: left;
+    margin:0;
+    text-align:center;
+    cursor: pointer;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(6n){
+    margin-right: 0;
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(1){
+    background-image: url(../img/gridcell_1.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(2){
+    background-image: url(../img/gridcell_2.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(3){
+    background-image: url(../img/gridcell_3.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(4){
+    background-image: url(../img/gridcell_4.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(5){
+    background-image: url(../img/gridcell_5.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(6){
+    background-image: url(../img/gridcell_6.png);
+}
+/*.borderGroup.GridColumns .colBox .col-2:nth-child(7){
+    background-image: url(../img/gridcell_7.png);
+    margin-top: 10px;
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(8){
+    background-image: url(../img/gridcell_8.png);
+    margin-top: 10px;
+}*/
+.borderGroup.GridColumns .colBox .col-2:nth-child(1).active{
+    background-image: url(../img/gridcellActive_1.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(2).active{
+    background-image: url(../img/gridcellActive_2.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(3).active{
+    background-image: url(../img/gridcellActive_3.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(4).active{
+    background-image: url(../img/gridcellActive_4.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(5).active{
+    background-image: url(../img/gridcellActive_5.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(6).active{
+    background-image: url(../img/gridcellActive_6.png);
+}
+/*.borderGroup.GridColumns .colBox .col-2:nth-child(7).active{
+    background-image: url(../img/gridcellActive_7.png);
+}
+.borderGroup.GridColumns .colBox .col-2:nth-child(8).active{
+    background-image: url(../img/gridcellActive_8.png);
+}*/
+.borderGroup.GridColumns .colBox{
+    overflow: hidden;
+    margin-top: 10px;
+}
+.borderGroup.GridColumns .GridDragArea{
+    width: 100%;
+    height: 30px;
+    position: relative;
+    margin-top: 10px;
+    background: #FFFFFF;
+    border: 1px solid #CDD1D5;
+    border-radius: 1px;
+}
+.borderGroup.GridColumns .GridDragArea .multiSliderHandler {
+    cursor: ew-resize;
+    background: #CDD1D5;
+    width: 8px;
+    height: 100%;
+    position: absolute;
+    /*left: 50%;
+    transform:translateX(-50%);*/
+}
+.borderGroup.GridColumns .GridDragArea .multiSliderHandler.select{
+    cursor: col-resize;
+    background: #4FA4E4;
+}
+.borderGroup.GridColumns .GridDragArea .multiSliderDivision{
+    height: 100%;
+    float: left;
+    line-height: 30px;
+    text-align: center;
+    overflow: hidden;
+    font-size: 12px;
+}
+.row{
+    padding: 0 15px;
+}
+.row h2{
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+}
+.row .slider-spinner > h2{
+    font-size: 12px;
+    color: #222222;
+    margin-bottom: 5px;
+}
+.s-15{
+    margin-bottom: 15px;
+}
+.s-20{
+    margin-bottom: 20px;
+}
+.isOpenBothMargin{
+    font-size: 12px;
+    color: rgba(0,0,0,0.87);
+    position: relative;
+}
+.isOpenBothMargin > input{
+    display: none;
+}
+.isOpenBothMargin > label{
+    width: 34px;
+    height: 14px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    vertical-align: middle;
+    cursor: pointer;
+}
+.isOpenBothMargin > label i {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(34,31,31,0.26);
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+}
+.isOpenBothMargin > label i:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #F1F1F1;
+    box-shadow: 0 0 1px 0 rgba(0,0,0,0.12), 0 1px 1px 0 rgba(0,0,0,0.24);
+    transition: all 0.3s;
+    left: -5px;
+}
+.isOpenBothMargin > input:checked + label i{
+    background: rgba(53, 153, 240,.5);
+}
+.isOpenBothMargin > input:checked + label i:before{
+    display: block;
+    left: 20px;
+    background: #379BF1;
+}
+.typeOfLink{
+    padding: 0 15px;
+}
+.typeOfLink .linkType{
+    position: relative;
+}
+.typeOfLink .linkType > button{
+    width: 100%;
+    background: rgba(153,153,153,0.10);
+    border-radius: 2px;
+    color: #363636;
+    padding: 0 15px;
+    text-align: left;
+    box-shadow: none;
+    position: relative;
+    text-shadow: none;
+}
+.typeOfLink .linkType > button i,.typeOfLink .linkContent .js_page_list i{
+    background-position: -280px -214px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.typeOfLink .linkType .drop-down,
+.typeOfLink .linkContent .drop-down{
+    position: absolute;
+    z-index: 10000;
+    top: 100%;
+    width: 100%;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0,0,0,.1);
+    border: solid 1px #c6cbd0;
+    margin-top: 3px;
+}
+.typeOfLink .linkType .drop-down li,
+.typeOfLink .linkContent .drop-down li{
+    display: block;
+    padding: 0px 20px;
+    clear: both;
+    line-height: 25px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-transition: all .15s ease;
+    -moz-transition: all .15s ease;
+    -o-transition: all .15s ease;
+}
+.typeOfLink .linkType .drop-down .select >li.current,.typeOfLink .linkType .drop-down .select >li:hover,
+.typeOfLink .linkContent .drop-down .select >li.current,.typeOfLink .linkContent .drop-down .select >li:hover {
+    background: #60a9d7;
+    line-height: 25px;
+    color: #fff;
+    display: block;
+}
+.typeOfLink .linkContent{
+    position: relative;
+}
+.typeOfLink .linkContent > input,.typeOfLink .openWay > select{
+    height: 32px;
+    display: table-cell;
+    padding: 0 0 0 5px;
+    transition: border-color 0.15s ease 0s;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 1px rgba(0,0,0,.1);
+    font-size: 12px;
+    color: rgba(0,0,0,0.38);
+}
+.typeOfLink .linkContent > input + span{
+    display: none;
+    max-width: 280px;
+    background-color: rgb(255, 255, 224);
+    border: 1px solid rgb(247, 206, 57);
+    color: rgb(51, 51, 51);
+    font-size: 12px;
+    padding: 5px 10px;
+    position: absolute;
+    top: -40px;
+}
+.typeOfLink .linkContent > input + span:before{
+    border-color: rgb(247, 206, 57) transparent transparent;
+    border-style: solid dashed dashed;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+    border-width: 6px;
+    position: absolute;
+    content: "";
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+}
+.typeOfLink .linkContent > input + span:after{
+    border-color: rgb(255, 255, 224) transparent transparent;
+    border-style: solid dashed dashed;
+    top: -1px;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+    border-width: 6px;
+    position: absolute;
+    content: "";
+    left: 50%;
+    transform: translateX(-50%);
+    top: 94%;
+}
+.typeOfLink .linkContent > input.error + span{
+    display: block;
+}
+.typeOfLink .linkContent > input.error{
+    border: 1px solid rgb(219, 18, 55);
+}
+.typeOfLink .openWay > h2{
+    font-size: 12px;
+    color: #222222;
+    margin-bottom: 10px;
+}
+
+
+.s-10 {
+    margin-top: 10px;
+}
+.col-12 {
+    width: 100%;
+    position: relative;
+}
+#fixedBroswer .form-group > input[type="checkbox"] + label, #fixedBroswer .form-group > input[type="radio"] + label {
+    background-color: rgb(255, 255, 255);
+    background-image: linear-gradient(to bottom, rgb(252, 252, 252) 1%, rgb(239, 240, 241));
+    border: 1px solid rgb(198, 203, 208);
+    border-radius: 100%;
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    line-height: normal !important;
+    margin: 0 5px 0 0;
+    position: relative;
+    vertical-align: middle;
+    width: 15px;
+}
+#fixedBroswer .form-group > input[type="checkbox"] + label {
+    border-radius: 3px;
+    padding: 0;
+}
+#fixedBroswer .form-group > input[type="checkbox"] + label:before {
+    content: "\200B";
+    height: 24px;
+    width: 0px;
+    display: block;
+    position: static;
+}
+#fixedBroswer .form-group > input[type="checkbox"]:checked + label::after {
+    content: url(../img/icon-checkbox.png);
+    left: 2px;
+    position: absolute;
+    top: -7px;
+}
+#fixedBroswer .row h2 {
+    font-size: 12px;
+    color: #707070;
+    font-weight: 700;
+    padding: 0px 0px 5px;
+    display: inline-block;
+    vertical-align: middle;
+    /* width: 243px; */
+    max-width: 226px;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-all;
+}
+.s-5 {
+    margin-top: 5px;
+}
+#fixedBroswer .row .container {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #c6cbd0;
+    background: #fff;
+    padding: 10px;
+    max-height: 360px;
+    display: table;
+}
+.col-left {
+    float: left;
+}
+.bg-position {
+    width: 75px;
+    display: table;
+    margin: 0;
+}
+.bg-position input[type=radio] {
+    display: none;
+}
+.bg-position input[type=radio] + label {
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    margin: 5px 5px 0px 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, .1);
+    border: solid 1px #c6cbd0;
+}
+.bg-position input[type=radio]:nth-child(1) + label {
+    background: url(../img/zd-ui.png) -306px -410px #fff;
+}
+.bg-position input[type=radio]:checked + label {
+    background-color: #5495bd;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, .1);
+}
+.slider-spinner span.num {
+    display: block;
+    float: left;
+    margin-left: 10px;
+}
+.slider-spinner span.num input {
+    width: 36px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid #c6cbd0;
+}
+.panel .panel-footer > .left {
+    float: left;
+    margin: 10px 0 0 10px;
+    /*line-height: normal;*/
+}
+.panel .panel-footer > .right {
+    float: right;
+    margin: 10px 10px 0 0;
+    /*line-height: normal;*/
+}
+#editBox > div > ul ul li {
+    opacity: 0.7;
+}
+#editBox > div > ul ul li:hover {
+    opacity: 1;
+}
+.form-group > input[type="checkbox"], .form-group > input[type="radio"] {
+    display: none;
+}
+#fixedBroswer .row{
+    display: table;
+    width: 100%;
+}
+#fixedBroswer .col-left ~ .row{
+    padding: 0;
+    padding-left: 9px;
+}
+#fixedBroswer .left button,#fixedBroswer .right button{
+    box-shadow: none;
+    text-shadow: none
+}
+#fixedBroswer .right button:hover{
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+}
+.prompt{
+    height: 40px;
+    line-height: 40px;
+    background: #f2f2f2;
+    font-size: 12px;
+    color: #4A4A4A;
+    padding-left: 20px;
+    position: fixed;
+    left: 240px;
+    right: 240px;
+    top: 20px;
+}
+.prompt ~ #mainArea{
+    top: 60px;
+}
+.prompt.hidden ~ #mainArea{
+    top: 0;
+}
+.attrBox.propsContainer > div select.form-control{
+    width: 100%;
+    height: 28px;
+    padding: 0;
+    transition: border-color 0.15s ease 0s;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0px 2px rgba(0,0,0,.1);
+    margin-top: 5px;
+}
+#fixedBroswer.panel .panel-footer > .left,
+#fixedBroswer.panel .panel-footer > .right{
+    line-height: normal;
+} 
+/*页面级样式面板 结束*/

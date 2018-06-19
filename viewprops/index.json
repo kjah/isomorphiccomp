@@ -1,0 +1,22 @@
+{
+	"pagename":"首页",
+	"complist":[
+		{
+			"id":"c_commonlist_1",
+			
+			"props":{
+				"title":"商品列表",
+				"comptype":"commonlist",
+				"datasource":"productList"
+			}
+		},
+		{
+			"id":"c_commonlist_2",
+			"props":{
+				"title":"资讯列表",
+				"comptype":"commonlist",
+				"datasource":"infoList"
+			}
+		}
+	]
+}

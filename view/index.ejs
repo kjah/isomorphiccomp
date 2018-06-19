@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head>
+    <title><%= title %></title>
+</head>
+<body data-pageid="index">
+	<div class="main pagebox">
+		
+	
+		<h1><%= title %></h1>
+		<!-- 固定函数输出  -->
+		<%-foo() %>	
+		<!-- 引入模板 -->
+		<%-tmpl('tmpl_head1')%>
+		<div id="c_container">
+
+			<div id="c_commonlist_1">
+				<% with(c_commonlist_1){%>
+				<p><%= props.title %></p>
+				<ul>
+					<% for(var i=0,info;info=data[i];i++){%>
+						<li><span><%=info.id%></span><span><%=info.title%></span></li>
+					<% };%>
+				</ul>
+				<% } %>
+			</div>
+		
+			<div id="c_commonlist_2">
+				<% with(c_commonlist_2){%>
+				<p><%= props.title %></p>
+				<ul>
+					<% for(var i=0,info;info=data[i];i++){%>
+						<li><span><%=info.id%></span><span><%=info.title%></span></li>
+					<% };%>
+				</ul>
+				<% } %>
+			</div>
+		</div>
+	</div>
+	
+<script type="text/javascript" src="jquery-1.11.1.js"></script>
+</body></html>

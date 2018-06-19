@@ -1,0 +1,23 @@
+<div data-tmpl="head1">
+	<h3>头部</h3>
+	<div id="c_nav_$head1_1" class="nav">
+		<% with(c_nav_$head1_1){%>
+		<p><%= props.title %></p>
+			<ul>
+				<% for(var i=0,info;info=data[i];i++){%>
+					<li><span><%=info.name%></span></li>
+				<% };%>
+			</ul>
+		<% } %>
+	</div>
+	<style type="text/css">
+		.nav li{
+			float:left;
+			list-style:none;
+			margin-right:10px;
+		}
+		.nav ul{
+			overflow: hidden;
+		}
+	</style>
+</div>

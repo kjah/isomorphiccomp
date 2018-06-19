@@ -1,0 +1,143 @@
+<!doctype html> 
+<html> 
+<head> 
+	<meta charset="utf-8"> 
+	<title></title>
+	<script type="text/javascript">
+        var m=location.search.match(/t=([^=]*)/);
+		var vd_version=m?m[1]:'';
+		function createLink(url,suffix){var link=document.createElement("link");link.rel="stylesheet";link.type="text/css";link.href=url+"?"+suffix;return link;}
+		function loadCss(){
+			var df=document.createDocumentFragment();[].forEach.call(arguments,function(url){df.appendChild(createLink(url,vd_version));});document.head.appendChild(df);}
+
+		loadCss('../css/editor.css');
+		loadCss('../css/jquery-ui.css');
+
+	</script>
+</head>
+<body>
+	<div id="canvasBreakpoints" class="mobile" data-value="480px" style="display: none;">
+		<div class="top_bar_breakpoints breakpoint-pc" data-value="100%" data-title="pc">
+		  <div class="breakpoints-width-left">100%</div>
+		  <div class="breakpoints-width-right">100%</div>
+		</div>
+
+		<div class="top_bar_breakpoints breakpoint-pad" data-value="1024px" data-title="pad">
+		  <div class="breakpoints-width-left">1024</div>
+		  <div class="breakpoints-width-right">1024</div>
+		</div>
+
+		<div class="top_bar_breakpoints breakpoint-mobile" data-value="480px" data-title="mobile">
+		  <div class="breakpoints-width-left">480</div>
+		  <div class="breakpoints-width-right">480</div>
+		</div>
+
+		<div class="top_bar_breakpoints breakpoint-icon"></div>
+
+	</div>
+	
+	<!-- 垫底的层，设置点击此处为选中pagebox -->
+	<div id="rebase" style="width: 100%; height: 100%; position: absolute;"></div>
+	<div class="prompt"><button id="refreshBtn">保存</button></div>
+	<div id="mainArea">
+		<iframe id="mainFrame"></iframe>
+		<div id="editLayer">
+			<div id="eventLayer">
+				<!-- 鼠标移入临时组件示意框 -->
+				<div id="tempEditBox" style="display: none;"></div>
+				
+				<div id="editBox" style="display:none">
+					<!-- 工具条菜单容器 -->
+					<div class="operation">
+						<div class="operate-btns">
+							<button data-operate="delete" class="delete" title="删除">
+								<i></i>
+							</button>
+							<button data-operate="fixed" class="fixed" title="固定浏览器">
+								<i></i>
+							</button>
+						</div>
+						<!-- <div class="textEditing">
+							<button data-operate="editText">双击编辑文字</button>
+						</div>
+						<div class="imageEditing">
+							<button data-operate="changeImage">双击替换图片</button>
+						</div>
+						<div class="componentEditing">
+							<button data-operate="changeStyle" class="changeStyle">修改样式</button>
+							<button data-operate="addContent" class="addContent">添加内容</button>
+							<button data-operate="modifyContent" class="modifyContent">内容维护</button>
+							<button data-operate="changeCategory" class="changeCategory">更换分类</button>
+						</div> -->
+						<!-- 选中组件层级列表 -->
+						<ul class="bread"></ul>
+					</div>
+					
+					<div class="top" data-operate="top">
+						<div class="knob"></div>
+					</div>
+					<div class="left" data-operate="left">
+						<div class="knob"></div>
+					</div>
+					<div class="bottom" data-operate="bottom">
+						<div class="knob"></div>
+					</div>
+					<div class="right" data-operate="right">
+						<div class="knob"></div>
+					</div>
+					<div class="topLeft" data-operate="topLeft">
+						<div class="knob"></div>
+						<!-- <div class="topLeftHandler" data-operate="move"></div> -->
+					</div>
+					<div class="bottomLeft" data-operate="bottomLeft">
+						<div class="knob"></div>
+						<!-- <div class="bottomLeftHandler" data-operate="move"></div> -->
+					</div>
+					<div class="bottomRight" data-operate="bottomRight">
+						<div class="knob"></div>
+						<!-- <div class="bottomRightHandler" data-operate="move"></div> -->
+					</div>
+					<div class="topRight" data-operate="topRight">
+						<div class="knob"></div>
+						<!-- <div class="topRightHandler" data-operate="move"></div> -->
+					</div>
+
+					<div class="fixedbrowser"></div>
+				</div>
+				<!-- 流式布局页拖拽占位符 -->
+				<div id="editAreaFlowPlaceholder" class="position2" style="display: none; position: absolute; text-align: center; font-size: 24px;">
+					<div class="line">
+						<img src="../../img/insert_prompt.png" />
+					</div>
+				</div>
+				<!-- 流式布局拖拽时鼠标指针样式 -->
+				<div id="flowModeDraggingCursor" style="position: absolute; display: none; pointer-events: none;">
+					<div style="width: 10px; height: 6px; border: 2px dotted gray;"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div id="dialogsContainer" style="width: 0px; height: 0px; position: relative; z-index: 10;"></div>
+
+	<!-- 页面管理 -->
+	<div id="PageManageDialog" class="panel" style="top: 50px;left: 50px;z-index: 2;display: none;">
+		<dialog-pagemanage></dialog-pagemanage>
+	</div>
+
+	<div id="components" style="top:0;left: 0;z-index: 2;">
+		<span class="listTitle">属性</span>
+		<div>
+			<textarea id="compData" style="height:800px;width:200px">
+				
+			</textarea>
+		</div>
+	</div>
+
+
+
+
+	<script type="text/javascript" src="../js/libs/LAB.src.js"></script>
+	<script type="text/javascript">$LAB.script('../js/core/loader.js?'+vd_version);</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+	"complist":[
+		{
+			"id":"c_nav_$head1_1",
+			"props":{
+				"title":"导航",
+				"comptype":"nav",
+				"datasource":"nav"
+			}
+		}
+	]
+}
