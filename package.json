@@ -1,5 +1,5 @@
 {
-  "name": "koa2",
+  "name": "isomorphiccomp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,6 +17,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node index.js",
     "pm2start": "pm2 start index.js --node-args=\"--inspect\" --watch"
   },
   "author": "",
