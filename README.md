@@ -32,7 +32,7 @@ mockjs  ---模拟数据<br>
 view目录中为前台展示页面，使用EJS模板。<br>
 viewprops目录中为每个页面的配置文件，包含页面中组件的配置信息。<br>
 
-示例：
+组件配置示例：
 ```
 {
 	"id":"c_commonlist_1",//component id
